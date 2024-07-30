@@ -9,3 +9,10 @@ package com.csc422_group_project.zombiewargame.Models.ZombieTypes;
  *
  * @author 
  */
+public class Tank extends Zombie {
+
+    //Constructor for Tank zombie
+    public Tank() {
+        super(150, 20, "Tank");
+    }
+}
