@@ -4,3 +4,10 @@
  */
 package com.csc422_group_project.zombiewargame.Models.ZombieTypes;
 
+public class CommonInfected extends Zombie {
+
+      //Construct CommonInfected zombie
+      public CommonInfected() {
+        super(30, 5, "CommonInfected");
+      }
+}
