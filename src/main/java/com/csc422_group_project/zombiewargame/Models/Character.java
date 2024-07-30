@@ -30,10 +30,6 @@ public class Character {
 
     //Check if Character is alive
     public boolean isAlive() {
-        if (this.healthBar > 0) {
-            return true;
-        } else {
-            return false;
-        }
+        return this.healthBar > 0;
     }
 }
