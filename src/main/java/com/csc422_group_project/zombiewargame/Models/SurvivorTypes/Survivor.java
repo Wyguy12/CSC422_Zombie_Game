@@ -7,7 +7,9 @@ package com.csc422_group_project.zombiewargame.Models.SurvivorTypes;
 import com.csc422_group_project.zombiewargame.Models.Character;
 
 /**
- * Abstract class for the survivor
+ * Abstract class for representing a Survivor in the game
+ * This extends the Character class
+ * This class contains the common properties and methods for all survivor types.
  * @author Wyatt 
  */ 
 public abstract class Survivor extends Character {
