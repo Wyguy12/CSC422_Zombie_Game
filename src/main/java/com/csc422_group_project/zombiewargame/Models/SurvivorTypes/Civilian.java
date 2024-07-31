@@ -5,11 +5,20 @@
 package com.csc422_group_project.zombiewargame.Models.SurvivorTypes;
 
 
-
 /**
- *
- * @author Wyatt
+ * 
+ * Civilian is a type of survivor that has a low health and low attack power
+ * Extends the Survivor class
+ * @author Wyatt 
  */
 public class Civilian extends Survivor {
 
+
+    /**
+     * Constructor for Civilian
+     * Initializes Civilian with 50 health and 5 attack power
+     */
+    public Civilian() {
+        super(50, 5, "Civilian");
+    }
 }
