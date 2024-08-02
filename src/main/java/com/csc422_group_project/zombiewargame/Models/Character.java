@@ -31,5 +31,9 @@ public class Character {
     //Check if Character is alive
     public boolean isAlive() {
         return this.healthBar > 0;
+    }    
+    
+    public int getHealth() {
+        return this.healthBar;
     }
 }
