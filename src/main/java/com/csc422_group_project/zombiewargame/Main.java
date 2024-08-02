@@ -24,6 +24,10 @@ import java.util.Random;
  * Release 1.0 - Aug 1, 2024
  *      Wrote methods to generate survivors and zombies, simulate combat, and display simple results.
  *      Wrote methods to help with debugging.
+ * 
+ * Release 2.0 - Aug 1, 2024
+ *      Added additional messages for release 2.0.
+ *      Fixed bug that allowed zombies to attack after they were killed.
  */
 
 public class Main {
@@ -36,7 +40,7 @@ public class Main {
     private static ArrayList<Survivor> survivors;
     private static ArrayList<Zombie> zombies;
     
-    private final static double RELEASE = 1.0;
+    private final static double RELEASE = 2.0;
     private final static boolean DISPLAY_DEBUG_INFO = false;
     
     
@@ -132,16 +136,6 @@ public class Main {
         return newZombies;
     }
     
-    // This method displays the number of survivors and zombies that were generated.
-    public static void DisplaySetup(double release) {
-        System.out.println();
-        
-        if (release == 1.0) {
-            System.out.println("We have " + survivors.size() + " survivors trying to make it to safety.");
-            System.out.println("But there are " + zombies.size() + " zombies waiting for them.");
-        }
-    }
-    
     // This method executes rounds alternating between the survivors attacking the zombies
     // and the zombies attacking the survivors until either all zombies or survivors are wiped out.
     private static void SimulateWar() {
@@ -157,21 +151,29 @@ public class Main {
         
             // Loop through each survivor.
             for (int s = 0; s < survivors.size(); s++) {
-                // Attack each zombie.
-                for (int z = 0; z < zombies.size(); z++) {
-                    Survivor thisSurvivor = survivors.get(s);
-                    Zombie thisZombie = zombies.get(z);
-                    // Only attack the zombie if it isn't already dead.
-                    if (thisZombie.isAlive()) {
-                        thisSurvivor.attack(thisZombie);
-                        
-                        if (DISPLAY_DEBUG_INFO) {
-                            System.out.println("Survivor " + (s + 1) + " attacked Zombie " + (z + 1) + " | Zombie health remaining: " + thisZombie.getHealth());
+                Survivor thisSurvivor = survivors.get(s);
+                if (thisSurvivor.isAlive()) {
+                    // Attack each zombie.
+                    for (int z = 0; z < zombies.size(); z++) {                    
+                        Zombie thisZombie = zombies.get(z);
+                        // Only attack the zombie if it isn't already dead.
+                        if (thisZombie.isAlive()) {
+                            thisSurvivor.attack(thisZombie);
+
+                            if (RELEASE == 2.0) {
+                                if (!thisZombie.isAlive()) {
+                                    System.out.println(thisSurvivor.getSurvivorType() + " " + (s + 1) + " killed " + thisZombie.getZombieType() + " " + (z + 1));
+                                }
+                            }
+
+                            if (DISPLAY_DEBUG_INFO) {
+                                System.out.println("Survivor " + (s + 1) + " attacked Zombie " + (z + 1) + " | Zombie health remaining: " + thisZombie.getHealth());
+                            }
                         }
-                    }
-                    else {
-                        if (DISPLAY_DEBUG_INFO) {
-                            System.out.println("Survivor " + (s + 1) + " did not attack Zombie " + (z + 1) + " because this zombie is already dead.");
+                        else {
+                            if (DISPLAY_DEBUG_INFO) {
+                                System.out.println("Survivor " + (s + 1) + " did not attack Zombie " + (z + 1) + " because this zombie is already dead.");
+                            }
                         }
                     }
                 }
@@ -184,21 +186,29 @@ public class Main {
             
             // Loop through each zombie.
             for (int z = 0; z < zombies.size(); z++) {
-                // Attack each survivor.
-                for (int s = 0; s < survivors.size(); s++) {
-                    Zombie thisZombie = zombies.get(z);
-                    Survivor thisSurvivor = survivors.get(s);
-                    // Only attack the survivor if it isn't already dead.
-                    if (thisSurvivor.isAlive()) {
-                        thisZombie.attack(thisSurvivor);
-                        
-                        if (DISPLAY_DEBUG_INFO) {
-                            System.out.println("Zombie " + (z + 1) + " attacked Survivor " + (s + 1) + " | Survivor health remaining: " + thisSurvivor.getHealth());
+                Zombie thisZombie = zombies.get(z);
+                if (thisZombie.isAlive()) {
+                    // Attack each survivor.
+                    for (int s = 0; s < survivors.size(); s++) {                    
+                        Survivor thisSurvivor = survivors.get(s);
+                        // Only attack the survivor if it isn't already dead.
+                        if (thisSurvivor.isAlive()) {
+                            thisZombie.attack(thisSurvivor);
+
+                            if (RELEASE == 2.0) {
+                                if (!thisSurvivor.isAlive()) {
+                                    System.out.println(thisZombie.getZombieType() + " " + (z + 1) + " killed " + thisSurvivor.getSurvivorType() + " " + (s + 1));
+                                }
+                            }
+
+                            if (DISPLAY_DEBUG_INFO) {
+                                System.out.println("Zombie " + (z + 1) + " attacked Survivor " + (s + 1) + " | Survivor health remaining: " + thisSurvivor.getHealth());
+                            }
                         }
-                    }
-                    else {
-                        if (DISPLAY_DEBUG_INFO) {
-                            System.out.println("Zombie " + (z + 1) + " did not attack Survivor " + (s + 1) + " because this survivor is already dead.");
+                        else {
+                            if (DISPLAY_DEBUG_INFO) {
+                                System.out.println("Zombie " + (z + 1) + " did not attack Survivor " + (s + 1) + " because this survivor is already dead.");
+                            }
                         }
                     }
                 }
@@ -237,17 +247,58 @@ public class Main {
         return remaining;
     }
     
+    // This method displays the number of survivors and zombies that were generated.
+    public static void DisplaySetup(double release) {
+        System.out.println();
+        
+        if (release == 1.0) {
+            System.out.println("We have " + survivors.size() + " survivors trying to make it to safety.");
+            System.out.println("But there are " + zombies.size() + " zombies waiting for them.");
+        }
+        
+        if (release == 2.0) {
+            int civilians = 0;
+            int scientists = 0;
+            int soldiers = 0;
+            
+            for (Survivor s : survivors) {
+                switch (s.getSurvivorType()) {
+                    case "Civilian":
+                        civilians++;
+                        break;
+                        
+                    case "Scientist":
+                        scientists++;
+                        break;
+                        
+                    case "Soldier":
+                        soldiers++;
+                        break;
+                }
+            }
+            
+            int common = 0;
+            int tanks = 0;
+            
+            for (Zombie z : zombies) {
+                if (z.getZombieType().equals("CommonInfected")) common++;
+                else tanks++;
+            }
+            
+            System.out.println("We have " + survivors.size() + " survivors trying to make it to safety (" + civilians + " civilians, " + scientists + " scientists, " + soldiers + " soldiers).");
+            System.out.println("But there are " + zombies.size() + " zombies waiting for them (" + common + " common infected, " + tanks + " tanks).");
+        }
+    }
+    
     // This method displays the results of the combat.
     private static void DisplayResults(double release) {
         System.out.println();
         
-        if (release == 1.0) {
-            if (SurvivorsRemaining() > 0) {
-                System.out.println(SurvivorsRemaining() + " survivors made it to safety.");
-            }
-            else {
-                System.out.println("None of the survivors made it to safety.");
-            }
+        if (SurvivorsRemaining() > 0) {
+            System.out.println(SurvivorsRemaining() + " survivors made it to safety.");
+        }
+        else {
+            System.out.println("None of the survivors made it to safety.");
         }
     }
     
