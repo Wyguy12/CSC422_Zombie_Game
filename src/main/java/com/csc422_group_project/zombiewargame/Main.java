@@ -157,21 +157,29 @@ public class Main {
         
             // Loop through each survivor.
             for (int s = 0; s < survivors.size(); s++) {
-                // Attack each zombie.
-                for (int z = 0; z < zombies.size(); z++) {
-                    Survivor thisSurvivor = survivors.get(s);
-                    Zombie thisZombie = zombies.get(z);
-                    // Only attack the zombie if it isn't already dead.
-                    if (thisZombie.isAlive()) {
-                        thisSurvivor.attack(thisZombie);
-                        
-                        if (DISPLAY_DEBUG_INFO) {
-                            System.out.println("Survivor " + (s + 1) + " attacked Zombie " + (z + 1) + " | Zombie health remaining: " + thisZombie.getHealth());
+                Survivor thisSurvivor = survivors.get(s);
+                if (thisSurvivor.isAlive()) {
+                    // Attack each zombie.
+                    for (int z = 0; z < zombies.size(); z++) {                    
+                        Zombie thisZombie = zombies.get(z);
+                        // Only attack the zombie if it isn't already dead.
+                        if (thisZombie.isAlive()) {
+                            thisSurvivor.attack(thisZombie);
+
+                            if (RELEASE == 2.0) {
+                                if (!thisZombie.isAlive()) {
+                                    System.out.println(thisSurvivor.getSurvivorType() + " " + (s + 1) + " killed " + thisZombie.getZombieType() + " " + (z + 1));
+                                }
+                            }
+
+                            if (DISPLAY_DEBUG_INFO) {
+                                System.out.println("Survivor " + (s + 1) + " attacked Zombie " + (z + 1) + " | Zombie health remaining: " + thisZombie.getHealth());
+                            }
                         }
-                    }
-                    else {
-                        if (DISPLAY_DEBUG_INFO) {
-                            System.out.println("Survivor " + (s + 1) + " did not attack Zombie " + (z + 1) + " because this zombie is already dead.");
+                        else {
+                            if (DISPLAY_DEBUG_INFO) {
+                                System.out.println("Survivor " + (s + 1) + " did not attack Zombie " + (z + 1) + " because this zombie is already dead.");
+                            }
                         }
                     }
                 }
@@ -184,21 +192,29 @@ public class Main {
             
             // Loop through each zombie.
             for (int z = 0; z < zombies.size(); z++) {
-                // Attack each survivor.
-                for (int s = 0; s < survivors.size(); s++) {
-                    Zombie thisZombie = zombies.get(z);
-                    Survivor thisSurvivor = survivors.get(s);
-                    // Only attack the survivor if it isn't already dead.
-                    if (thisSurvivor.isAlive()) {
-                        thisZombie.attack(thisSurvivor);
-                        
-                        if (DISPLAY_DEBUG_INFO) {
-                            System.out.println("Zombie " + (z + 1) + " attacked Survivor " + (s + 1) + " | Survivor health remaining: " + thisSurvivor.getHealth());
+                Zombie thisZombie = zombies.get(z);
+                if (thisZombie.isAlive()) {
+                    // Attack each survivor.
+                    for (int s = 0; s < survivors.size(); s++) {                    
+                        Survivor thisSurvivor = survivors.get(s);
+                        // Only attack the survivor if it isn't already dead.
+                        if (thisSurvivor.isAlive()) {
+                            thisZombie.attack(thisSurvivor);
+
+                            if (RELEASE == 2.0) {
+                                if (!thisSurvivor.isAlive()) {
+                                    System.out.println(thisZombie.getZombieType() + " " + (z + 1) + " killed " + thisSurvivor.getSurvivorType() + " " + (s + 1));
+                                }
+                            }
+
+                            if (DISPLAY_DEBUG_INFO) {
+                                System.out.println("Zombie " + (z + 1) + " attacked Survivor " + (s + 1) + " | Survivor health remaining: " + thisSurvivor.getHealth());
+                            }
                         }
-                    }
-                    else {
-                        if (DISPLAY_DEBUG_INFO) {
-                            System.out.println("Zombie " + (z + 1) + " did not attack Survivor " + (s + 1) + " because this survivor is already dead.");
+                        else {
+                            if (DISPLAY_DEBUG_INFO) {
+                                System.out.println("Zombie " + (z + 1) + " did not attack Survivor " + (s + 1) + " because this survivor is already dead.");
+                            }
                         }
                     }
                 }
