@@ -8,7 +8,7 @@ import com.csc422_group_project.zombiewargame.Models.Character;
 
 /**
  *
- * @author 
+ * @author Natasha Czaplewski
  */
 
 public abstract class Zombie extends Character {
