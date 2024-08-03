@@ -5,8 +5,8 @@
 package com.csc422_group_project.zombiewargame.Models;
 
 /**
- *
- * @author 
+ * Character super class.
+ * @author Natasha Czaplewski
  */
 public class Character {
     protected int healthBar;
