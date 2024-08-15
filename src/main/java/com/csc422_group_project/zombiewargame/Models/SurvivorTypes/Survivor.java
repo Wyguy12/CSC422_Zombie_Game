@@ -23,17 +23,20 @@ import com.csc422_group_project.zombiewargame.Models.WeaponTypes.SubmachineGun;
  * @author Wyatt 
  */ 
 public abstract class Survivor extends Character {
-    protected String survivorType;
+    protected String survivorType; // Create a variable to store the type of survivor
     protected ArrayList<Weapon> weapons; // Create an ArrayList to store the collection of objects of type Weapon
     protected Weapon weaponChoice; // Create a variable to store the weapon choice
+    private static final Random random = new Random(); // Create a new random object called random
 
+    
     /**
+     * @author Wyatt
      * Constructor for Survivor
      * @param healthBar The health of the survivor
      * @param attackPower The attack power of the survivor
      * @param survivorType The type of survivor
      */
-    public Survivor(int healthBar, int attackPower, String survivorType) {
+    protected Survivor(int healthBar, int attackPower, String survivorType) {
         super(healthBar, attackPower); // Calls the constructor of the parent class
         this.survivorType = survivorType; // Sets the survivor type
         this.weaponChoice = randomlyGenerateWeaponChoice(); // Sets the weapon choice to a randomly generated weapon choice
@@ -41,13 +44,13 @@ public abstract class Survivor extends Character {
 
 
     /**
-     * @Author Wyatt
+     * @author Wyatt
      * Method to randomly generate a weapon choice for the survivor
      * It uses the Random class to generate a random number between 0 and 7
      * Then it will use that number to randomly select a weapon from the weapons ArrayList
      * @return The weapon choice
      */
-    public static Weapon randomlyGenerateWeaponChoice() {
+    protected static Weapon randomlyGenerateWeaponChoice() {
         // Create a new ArrayList to store the collection of objects
         ArrayList<Weapon> weapons = new ArrayList<>();
 
@@ -72,7 +75,6 @@ public abstract class Survivor extends Character {
         weapons.add(submachineGun);
 
         
-        Random random = new Random(); // Create a new random object called random
         int randomIndexPointer = random.nextInt(weapons.size()); // This will generate a random number between 0 and 7 and store it in the randomIndexPointer variable
         weapons.get(randomIndexPointer); // Returns the weapon choice by getting the weapon from the weapons ArrayList at the random index pointer variable
     
@@ -91,7 +93,7 @@ public abstract class Survivor extends Character {
      * @param target The target character to attack
      * @return void It does not return anything
      */
-    @Override
+    @Override // Overrides the attack method in the super class
     public void attack(Character target) {
         if (this.weaponChoice.checkForHit()) { // Calls the checkForHit method on the weapon choice
             target.receiveDamage(this.weaponChoice.getDamage()); // Calls the receiveDamage method on the target and passes in the damage of the weapon choice 
@@ -101,7 +103,9 @@ public abstract class Survivor extends Character {
         }
     }
 
+    
     /**
+     * @author Wyatt
      * Gets the type of survivor
      * @return The type of survivor
      */
