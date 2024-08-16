@@ -9,7 +9,7 @@ package com.csc422_group_project.zombiewargame.Models;
  * @author Carl Fredrickson
  */
 
-public class Weapon {
+public abstract class Weapon {
     protected int damage;
     protected double accuracy;
 
@@ -32,4 +32,11 @@ public class Weapon {
     public boolean checkForHit() {
         return Math.random() <= this.accuracy;
     }
+
+    /**
+     * @author Natasha Czaplewski
+     * @return name of weapon
+     * Abstract method for implementation of weapon name to main class.
+     */
+    public abstract String getName();
 }
