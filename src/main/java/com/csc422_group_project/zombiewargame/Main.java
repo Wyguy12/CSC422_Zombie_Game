@@ -28,6 +28,10 @@ import java.util.Random;
  * Release 2.0 - Aug 1, 2024
  *      Added additional messages for release 2.0.
  *      Fixed bug that allowed zombies to attack after they were killed.
+ *
+ * @author Natasha Czaplewski
+ * Release 3.0 - August 15,2024
+ *      Add display of the weapon that kills the zombie.
  */
 
 public class Main {
@@ -162,7 +166,7 @@ public class Main {
 
                             if (RELEASE == 2.0) {
                                 if (!thisZombie.isAlive()) {
-                                    System.out.println(thisSurvivor.getSurvivorType() + " " + (s + 1) + " killed " + thisZombie.getZombieType() + " " + (z + 1));
+                                    System.out.println(thisSurvivor.getSurvivorType() + " " + (s + 1) + " killed " + thisZombie.getZombieType() + " " + (z + 1) + " with a " + thisSurvivor.getWeaponChoice().getName());
                                 }
                             }
 
