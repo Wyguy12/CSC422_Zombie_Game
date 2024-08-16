@@ -112,4 +112,14 @@ public abstract class Survivor extends Character {
     public String getSurvivorType() {
         return survivorType; // Returns the survivor type
     }
+    
+    /**
+     * @author Natasha
+     * Add getter method for weapon choice to reference in Main.
+     * @return The random type of weapon.
+     */
+    
+    public Weapon getWeaponChoice() {
+        return weaponChoice;
+    }
 }
